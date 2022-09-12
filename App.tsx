@@ -9,17 +9,77 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window")
 export default function App() {
   const [city, setCity] = useState("Loading...")
   const [ok, setOk] = useState(true)
-  const [meal, setMeal] = useState('')
-  const [dinner, setDinner] = useState('')
+  const [meal2, setMeal2] = useState('')
+  const [dinner2, setDinner2] = useState('')
+  const [meal3, setMeal3] = useState('')
+  const [dinner3, setDinner3] = useState('')
+  const [meal4, setMeal4] = useState('')
+  const [dinner4, setDinner4] = useState('')
+  const [meal5, setMeal5] = useState('')
+  const [dinner5, setDinner5] = useState('')
+  const [meal6, setMeal6] = useState('')
+  const [dinner6, setDinner6] = useState('')
 
-  const getMeal = () => {
-    axios.get('https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=20220913').then((Response) => {
-      setMeal(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      setDinner(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+  const getCurrentWeek = () => {
+    const day = new Date();
+    const sunday = day.getTime() - 86400000 * day.getDay();
+
+    day.setTime(sunday);
+
+    const result = [day.toISOString().slice(0, 10)];
+
+    for (let i = 1; i < 7; i++) {
+      day.setTime(day.getTime() + 86400000);
+      result.push(day.toISOString().slice(0, 10));
+    }
+
+    return result;
+  }
+
+  const getMeal2 = () => {
+    axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[2].replace(/\-/gi, '')}`).then((Response) => {
+      setMeal2(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      setDinner2(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
-
+  }
+  const getMeal3 = () => {
+    axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[3].replace(/\-/gi, '')}`).then((Response) => {
+      setMeal3(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      setDinner3(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      console.log(Response.data.mealServiceDietInfo[1])
+    }).catch((Error) => {
+      console.log(Error);
+    })
+  }
+  const getMeal4 = () => {
+    axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[4].replace(/\-/gi, '')}`).then((Response) => {
+      setMeal4(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      setDinner4(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      console.log(Response.data.mealServiceDietInfo[1])
+    }).catch((Error) => {
+      console.log(Error);
+    })
+  }
+  const getMeal5 = () => {
+    axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[5].replace(/\-/gi, '')}`).then((Response) => {
+      setMeal5(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      setDinner5(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      console.log(Response.data.mealServiceDietInfo[1])
+    }).catch((Error) => {
+      console.log(Error);
+    })
+  }
+  const getMeal6 = () => {
+    axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[6].replace(/\-/gi, '')}`).then((Response) => {
+      setMeal6(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      setDinner6(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
+      console.log(Response.data.mealServiceDietInfo[1])
+    }).catch((Error) => {
+      console.log(Error);
+    })
   }
   const getWeather = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync()
@@ -32,8 +92,13 @@ export default function App() {
   }
 
   useEffect(() => {
+    getCurrentWeek()
     getWeather()
-    getMeal()
+    getMeal2()
+    getMeal3()
+    getMeal4()
+    getMeal5()
+    getMeal6()
   }, [])
 
   return (
@@ -52,17 +117,76 @@ export default function App() {
       >
         <View style={styles.box}>
           <View style={styles.mealBox}>
-
             <View style={styles.date}>
-              <Text style={styles.date}>9월 13일 화요일</Text>
+              <Text style={styles.date}>{getCurrentWeek()[2].replace(/\-/gi, '')}</Text>
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
-              <Text style={styles.mealText}>{meal}</Text >
+              <Text style={styles.mealText}>{meal2}</Text >
             </View>
             <View style={styles.line}></View>
             <View style={styles.dinner}>
-              <Text style={styles.mealText}>{dinner}</Text >
+              <Text style={styles.mealText}>{dinner2}</Text >
+            </View>
+          </View>
+        </View>
+        <View style={styles.box}>
+          <View style={styles.mealBox}>
+            <View style={styles.date}>
+              <Text style={styles.date}>{getCurrentWeek()[3].replace(/\-/gi, '')}</Text>
+              <View style={styles.line}></View>
+            </View>
+            <View style={styles.lunch}>
+              <Text style={styles.mealText}>{meal3}</Text >
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dinner}>
+              <Text style={styles.mealText}>{dinner3}</Text >
+            </View>
+          </View>
+        </View>
+        <View style={styles.box}>
+          <View style={styles.mealBox}>
+            <View style={styles.date}>
+              <Text style={styles.date}>{getCurrentWeek()[4].replace(/\-/gi, '')}</Text>
+              <View style={styles.line}></View>
+            </View>
+            <View style={styles.lunch}>
+              <Text style={styles.mealText}>{meal4}</Text >
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dinner}>
+              <Text style={styles.mealText}>{dinner4}</Text >
+            </View>
+          </View>
+        </View>
+        <View style={styles.box}>
+          <View style={styles.mealBox}>
+            <View style={styles.date}>
+              <Text style={styles.date}>{getCurrentWeek()[5].replace(/\-/gi, '')}</Text>
+              <View style={styles.line}></View>
+            </View>
+            <View style={styles.lunch}>
+              <Text style={styles.mealText}>{meal5}</Text >
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dinner}>
+              <Text style={styles.mealText}>{dinner5}</Text >
+            </View>
+          </View>
+        </View>
+        <View style={styles.box}>
+          <View style={styles.mealBox}>
+            <View style={styles.date}>
+              <Text style={styles.date}>{getCurrentWeek()[6].replace(/\-/gi, '')}</Text>
+              <View style={styles.line}></View>
+            </View>
+            <View style={styles.lunch}>
+              <Text style={styles.mealText}>{meal6}</Text >
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dinner}>
+              <Text style={styles.mealText}>{dinner6}</Text >
             </View>
           </View>
         </View>
@@ -100,7 +224,7 @@ const styles = StyleSheet.create({
   mealBox: {
     flex: 1,
     backgroundColor: "white",
-    width: SCREEN_WIDTH * 0.9,
+    width: SCREEN_WIDTH * 0.7,
     height: SCREEN_HEIGHT * 0.9,
     marginTop: 0,
     marginBottom: 30,
@@ -115,7 +239,7 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    width: SCREEN_WIDTH * 0.9,
+    width: SCREEN_WIDTH * 0.7,
     height: 1,
     marginTop: 10,
     backgroundColor: "gray",
