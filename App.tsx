@@ -1,12 +1,16 @@
 import * as Location from 'expo-location'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View, Dimensions, BackHandler } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native'
 import axios from 'axios';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window")
 
 export default function App() {
+  const replaceAt = function (input: string, index: number, character: string) {
+    return input.substr(0, index) + character + input.substr(index + character.length);
+  }
+
   const [city, setCity] = useState("Loading...")
   const [ok, setOk] = useState(true)
   const [meal2, setMeal2] = useState('')
@@ -40,7 +44,6 @@ export default function App() {
     axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[2].replace(/\-/gi, '')}`).then((Response) => {
       setMeal2(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
       setDinner2(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
@@ -49,7 +52,6 @@ export default function App() {
     axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[3].replace(/\-/gi, '')}`).then((Response) => {
       setMeal3(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
       setDinner3(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
@@ -58,7 +60,6 @@ export default function App() {
     axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[4].replace(/\-/gi, '')}`).then((Response) => {
       setMeal4(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
       setDinner4(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
@@ -67,7 +68,6 @@ export default function App() {
     axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[5].replace(/\-/gi, '')}`).then((Response) => {
       setMeal5(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
       setDinner5(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
@@ -76,7 +76,6 @@ export default function App() {
     axios.get(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=5692fa4bb8c54216b2b4194b0075d6f6&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010462&MLSV_YMD=${getCurrentWeek()[6].replace(/\-/gi, '')}`).then((Response) => {
       setMeal6(Response.data.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
       setDinner6(Response.data.mealServiceDietInfo[1].row[1].DDISH_NM.replace(/\<br\/\>/gi, '\n').replace(/\(점심\)/gi, '').replace(/\([^\)]*\)/gi, ''))
-      console.log(Response.data.mealServiceDietInfo[1])
     }).catch((Error) => {
       console.log(Error);
     })
@@ -105,20 +104,23 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.title}>
-        <Text style={styles.titleContent}>Today</Text>
-        <Text style={styles.city}>{city}</Text>
+        <Text style={styles.titleContent}>IMHO WITM</Text>
+        <Text style={styles.subtitleContent}>What is Today's Meal?</Text>
       </View>
       <ScrollView
-        contentContainerStyle={styles.weather}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-
       >
         <View style={styles.box}>
           <View style={styles.mealBox}>
             <View style={styles.date}>
-              <Text style={styles.date}>{getCurrentWeek()[2].replace(/\-/gi, '')}</Text>
+              <Text style={styles.date}>
+                {replaceAt(getCurrentWeek()[2], 4, '년 ').substring(0, 7)}
+                월&nbsp;
+                {getCurrentWeek()[2].substring(8, 10)}
+                일
+              </Text >
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
@@ -133,7 +135,12 @@ export default function App() {
         <View style={styles.box}>
           <View style={styles.mealBox}>
             <View style={styles.date}>
-              <Text style={styles.date}>{getCurrentWeek()[3].replace(/\-/gi, '')}</Text>
+              <Text style={styles.date}>
+                {replaceAt(getCurrentWeek()[3], 4, '년 ').substring(0, 7)}
+                월&nbsp;
+                {getCurrentWeek()[3].substring(8, 10)}
+                일
+              </Text >
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
@@ -148,7 +155,12 @@ export default function App() {
         <View style={styles.box}>
           <View style={styles.mealBox}>
             <View style={styles.date}>
-              <Text style={styles.date}>{getCurrentWeek()[4].replace(/\-/gi, '')}</Text>
+              <Text style={styles.date}>
+                {replaceAt(getCurrentWeek()[4], 4, '년 ').substring(0, 7)}
+                월&nbsp;
+                {getCurrentWeek()[4].substring(8, 10)}
+                일
+              </Text >
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
@@ -163,7 +175,12 @@ export default function App() {
         <View style={styles.box}>
           <View style={styles.mealBox}>
             <View style={styles.date}>
-              <Text style={styles.date}>{getCurrentWeek()[5].replace(/\-/gi, '')}</Text>
+              <Text style={styles.date}>
+                {replaceAt(getCurrentWeek()[5], 4, '년 ').substring(0, 7)}
+                월&nbsp;
+                {getCurrentWeek()[5].substring(8, 10)}
+                일
+              </Text >
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
@@ -178,7 +195,12 @@ export default function App() {
         <View style={styles.box}>
           <View style={styles.mealBox}>
             <View style={styles.date}>
-              <Text style={styles.date}>{getCurrentWeek()[6].replace(/\-/gi, '')}</Text>
+              <Text style={styles.date}>
+                {replaceAt(getCurrentWeek()[6], 4, '년 ').substring(0, 7)}
+                월&nbsp;
+                {getCurrentWeek()[6].substring(8, 10)}
+                일
+              </Text >
               <View style={styles.line}></View>
             </View>
             <View style={styles.lunch}>
@@ -191,31 +213,31 @@ export default function App() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </View >
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
+    backgroundColor: "white",
   },
   title: {
-    flex: 0.5,
+    flex: 0.35,
     justifyContent: "center",
     alignItems: "center"
   },
   titleContent: {
-    fontSize: 60,
-    fontWeight: "600",
+    fontSize: 40,
+    fontWeight: "800",
+    color: '#1074e3'
   },
-  city: {
-    fontSize: 20,
-    fontWeight: "500"
+  subtitleContent: {
+    fontSize: 21.8,
+    fontWeight: "500",
+    color: '#1074e3'
   },
 
-  weather: {
-  },
   box: {
     width: SCREEN_WIDTH,
     alignItems: "center",
@@ -223,19 +245,21 @@ const styles = StyleSheet.create({
   },
   mealBox: {
     flex: 1,
-    backgroundColor: "white",
     width: SCREEN_WIDTH * 0.7,
     height: SCREEN_HEIGHT * 0.9,
     marginTop: 0,
     marginBottom: 30,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
   },
 
   date: {
     marginTop: 5,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "600",
-    alignItems: "center"
+    alignItems: "center",
+    color: '#1074e3'
   },
 
   line: {
