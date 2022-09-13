@@ -80,19 +80,9 @@ export default function App() {
       console.log(Error);
     })
   }
-  const getWeather = async () => {
-    const { granted } = await Location.requestForegroundPermissionsAsync()
-    if (!granted) {
-      setOk(false)
-    }
-    const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({ accuracy: 6 })
-    const location = await Location.reverseGeocodeAsync({ latitude, longitude }, { useGoogleMaps: false })
-    setCity(`${location[0].city} ${location[0].street}`)
-  }
 
   useEffect(() => {
     getCurrentWeek()
-    getWeather()
     getMeal2()
     getMeal3()
     getMeal4()
@@ -213,6 +203,7 @@ export default function App() {
           </View>
         </View>
       </ScrollView>
+      <Text style={styles.insta}>만든놈 인스타 : @ubin._ing  버그 제보 환영</Text>
     </View >
   );
 }
@@ -245,7 +236,7 @@ const styles = StyleSheet.create({
   },
   mealBox: {
     flex: 1,
-    width: SCREEN_WIDTH * 0.7,
+    width: SCREEN_WIDTH * 0.65,
     height: SCREEN_HEIGHT * 0.9,
     marginTop: 0,
     marginBottom: 30,
@@ -263,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    width: SCREEN_WIDTH * 0.7,
+    width: SCREEN_WIDTH * 0.65,
     height: 1,
     marginTop: 10,
     backgroundColor: "gray",
@@ -281,6 +272,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     textAlign: "center",
+  },
+  insta: {
+    fontSize: 10,
+    textAlign: 'center',
+    marginBottom: 20,
   }
 })
 

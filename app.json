@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "imho-service",
-    "slug": "imho-service",
-    "version": "1.0.0",
+    "name": "buil-service",
+    "slug": "buil-service",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,13 +18,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ubin.builservice"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ubin.builservice"
     },
     "web": {
       "favicon": "./assets/favicon.png"
